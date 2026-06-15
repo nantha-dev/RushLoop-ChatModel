@@ -5,9 +5,9 @@ from pydantic import BaseModel
 from groq import Groq
 from pymongo import MongoClient
 from datetime import datetime
+from config import GROQ_API_KEY
+from groq import Groq
 
-
-GROQ_API_KEY = "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"   # Move to env var!
 MONGO_URI = "mongodb://localhost:27017"
 DB_NAME = "chat_app"
 COLLECTION_NAME = "messages"
