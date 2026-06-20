@@ -72,7 +72,7 @@ function App() {
     try {
       if (input.toLowerCase().startsWith('/imagine ')) {
         const prompt = input.slice(9);
-        const response = await axios.post('http://localhost:5000/api/generate-image', { prompt });
+        const response = await axios.post('https://rushloop.onrender.com/api/generate-image', { prompt });
         const imageUrl = response.data.image_url;
         
         setMessages(prev => [...prev, { 
@@ -86,7 +86,7 @@ function App() {
           .map(m => ({ role: m.role, content: m.content }))
           .concat({ role: 'user', content: input });
         
-        const response = await axios.post('http://localhost:5000/api/chat', { messages: contextMessages });
+        const response = await axios.post('https://rushloop.onrender.com/api/chat', { messages: contextMessages });
         
         if (response.data.action === 'generate_image') {
           const prompt = response.data.prompt;
@@ -94,7 +94,7 @@ function App() {
           setMessages(prev => [...prev, { role: 'assistant', content: `Generating image for: **${prompt}**...` }]);
           
           try {
-            const imgResponse = await axios.post('http://localhost:5000/api/generate-image', { prompt });
+            const imgResponse = await axios.post('https://rushloop.onrender.com/api/generate-image', { prompt });
             const imageUrl = imgResponse.data.image_url;
             
             setMessages(prev => {
