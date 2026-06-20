@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import ReactMarkdown from 'react-markdown';
 import { Mic, Send, Image as ImageIcon, Plus, User, Bot, Loader2, Menu, X } from 'lucide-react';
-import logo from './assets/vite.svg';
+
 
 function App() {
   const [messages, setMessages] = useState([]);
@@ -155,7 +155,7 @@ function App() {
       <div className="main-wrapper">
         <nav className="navbar">
           <div className="navbar-logo">
-            <img src={logo} alt="Logo" />
+            
             <span>RushLoop AI</span>
           </div>
           <button className="menu-btn" onClick={() => setSidebarOpen(true)}>
