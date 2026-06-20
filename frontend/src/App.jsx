@@ -1,13 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import ReactMarkdown from 'react-markdown';
-import { Mic, Send, Image as ImageIcon, Plus, User, Bot, Loader2 } from 'lucide-react';
+import { Mic, Send, Image as ImageIcon, Plus, User, Bot, Loader2, Menu, X } from 'lucide-react';
+import logo from './assets/vite.svg';
 
 function App() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   
   const messagesEndRef = useRef(null);
 
@@ -140,13 +142,28 @@ function App() {
 
   return (
     <div className="app-container">
-      <aside className="sidebar">
-        <button className="new-chat-btn" onClick={() => setMessages([])}>
+      <div className={`sidebar-overlay ${sidebarOpen ? 'open' : ''}`} onClick={() => setSidebarOpen(false)}></div>
+      <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
+        <button className="close-sidebar-btn" onClick={() => setSidebarOpen(false)}>
+          <X size={24} />
+        </button>
+        <button className="new-chat-btn" onClick={() => { setMessages([]); setSidebarOpen(false); }}>
           <Plus size={16} /> New Chat
         </button>
       </aside>
 
-      <main className="main-chat">
+      <div className="main-wrapper">
+        <nav className="navbar">
+          <div className="navbar-logo">
+            <img src={logo} alt="Logo" />
+            <span>RushLoop AI</span>
+          </div>
+          <button className="menu-btn" onClick={() => setSidebarOpen(true)}>
+            <Menu size={24} />
+          </button>
+        </nav>
+
+        <main className="main-chat">
         <div className="chat-history">
           {messages.length === 0 && (
             <div style={{ textAlign: 'center', color: 'var(--text-secondary)', marginTop: '20vh' }}>
@@ -215,6 +232,7 @@ function App() {
           </div>
         </div>
       </main>
+      </div>
     </div>
   );
 }
