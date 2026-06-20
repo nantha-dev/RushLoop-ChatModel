@@ -13,9 +13,14 @@ load_dotenv()
 GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")
 HUGGINGFACE_API_KEY = os.environ.get("HUGGINGFACE_API_KEY", "")
 
-# Initialize Groq client if key exists
+# Initialize Groq client if key exist
 groq_client = Groq(api_key=GROQ_API_KEY) if GROQ_API_KEY else None
-
+@app.route("/verify", methods=["GET"])
+def verify():
+    return jsonify({
+        "status": "working",
+        "message": "Backend is running successfully"
+    })
 @app.route('/api/chat', methods=['POST'])
 def chat():
     if not groq_client:
@@ -53,7 +58,7 @@ def chat():
                 "role": "system", 
                 "content": "You are a helpful AI assistant. If the user asks you to generate or create an image, picture, or drawing, you MUST use the `generate_image` tool. Do NOT output raw <function> XML tags. Only use the standard JSON tool calling format. If the user just wants to chat, reply normally."
             })
-
+        print("Messages sent to Groq API")
         completion = groq_client.chat.completions.create(
             model="llama-3.3-70b-versatile",
             messages=messages,
@@ -66,6 +71,7 @@ def chat():
         )
         
         message = completion.choices[0].message
+        print("get result from Groq API")
         
         if message.tool_calls:
             tool_call = message.tool_calls[0]
