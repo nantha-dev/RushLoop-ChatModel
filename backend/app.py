@@ -13,7 +13,7 @@ load_dotenv()
 GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")
 HUGGINGFACE_API_KEY = os.environ.get("HUGGINGFACE_API_KEY", "")
 
-# Initialize Groq client if key exists
+# Initialize Groq client if key exist
 groq_client = Groq(api_key=GROQ_API_KEY) if GROQ_API_KEY else None
 
 @app.route('/api/chat', methods=['POST'])
